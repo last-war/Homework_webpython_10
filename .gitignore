@@ -112,7 +112,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+Bestquotes/Bestquotes/.env
 .venv
 env/
 venv/
