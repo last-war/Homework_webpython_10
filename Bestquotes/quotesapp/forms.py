@@ -1,5 +1,16 @@
-from django.forms import ModelForm, CharField, TextInput
+from django.forms import ModelForm, CharField, TextInput, DateField, SelectDateWidget
 from .models import Tag, Author, Quote
+
+
+class AuthorForm(ModelForm):
+    fullname = CharField(max_length=150, required=True, widget=TextInput())
+    born_date = DateField(widget=SelectDateWidget(years=[i for i in range(1800, 2023)]))
+    born_location = CharField(max_length=150, widget=TextInput())
+    description = CharField(max_length=1000, widget=TextInput())
+
+    class Meta:
+        model = Author
+        fields = ['fullname', 'born_date', 'born_location', 'description']
 
 
 class TagForm(ModelForm):
@@ -13,9 +24,9 @@ class TagForm(ModelForm):
 class QuoteForm(ModelForm):
 
     quote = CharField(min_length=5, max_length=500, required=True, widget=TextInput())
-    author = CharField(min_length=10, max_length=150, required=True, widget=TextInput())
+    author = CharField(min_length=1, max_length=150, widget=TextInput())
 
     class Meta:
         model = Quote
-        fields = ['quote', 'author']
-        exclude = ['tags']
+        fields = ['quote']
+        exclude = ['tags', 'author']
